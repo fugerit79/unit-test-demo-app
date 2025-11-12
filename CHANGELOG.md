@@ -9,4 +9,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Devcontaienr Java 21 + Maven 3.9
 - Progetto di esempio per le unit test
