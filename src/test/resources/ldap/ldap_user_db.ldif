@@ -1,0 +1,35 @@
+version: 1
+
+dn: ou=users,dc=test,dc=it
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+dn: cn=USER1,ou=users,dc=test,dc=it
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: USER1
+userPassword: Test2024
+cn: USER1
+cn:: U29uZHJlIEVpa2FuZ2VyIEt2YWzDuA==
+sn: Curie
+description: Marie Curie
+givenName: Marie
+businessCategory: admin
+businessCategory: user
+
+dn: cn=CCCDDD80A01H501X,ou=users,dc=test,dc=it
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: USER2
+userPassword: Test2024
+cn: USER2
+cn:: U29uZHJlIEVpa2FuZ2VyIEt2YWzDuA==
+sn: Curie
+description: Pierre Curie
+givenName: Pierre
+businessCategory: user
