@@ -26,3 +26,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build
         run: mvn clean install
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=fugerit79 -Dsonar.projectKey=fugerit79_unit-test-demo-app
