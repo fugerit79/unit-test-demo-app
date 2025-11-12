@@ -1,8 +1,12 @@
-greeting:
-  message: "hello"
-
 quarkus:
   native:
     # if needed add -H:+UnlockExperimentalVMOptions
     additional-build-args: -H:IncludeResources=unit-test-demo-app/fm-doc-process-config.xml,\
       -H:IncludeResources=unit-test-demo-app/template/document.ftl
+
+  # la verifica del JWT la farà l'API gateway o un altro componente esterno
+  smallrye-jwt:
+    enabled: false
+
+
+
