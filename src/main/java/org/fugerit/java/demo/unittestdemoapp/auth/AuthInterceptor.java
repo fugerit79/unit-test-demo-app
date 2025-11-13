@@ -5,6 +5,7 @@ import jakarta.annotation.Priority;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.lang.helpers.StringUtils;
@@ -49,11 +50,21 @@ public class AuthInterceptor {
                 }
             }
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (WebApplicationException e) {
+            if (e.getResponse() != null) {
+                return e.getResponse();
+            } else {
+                return this.handleException(e);
+            }
         } catch (Exception e) {
-            String message = String.format("Errore : %s", e.getMessage());
-            log.error(message, e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return this.handleException(e);
         }
+    }
+
+    private Response handleException(Exception e) {
+        String message = String.format("Errore : %s", e.getMessage());
+        log.error(message, e);
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
 }

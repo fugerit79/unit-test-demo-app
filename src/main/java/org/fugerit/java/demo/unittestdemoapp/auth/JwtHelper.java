@@ -1,7 +1,9 @@
 package org.fugerit.java.demo.unittestdemoapp.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import lombok.extern.slf4j.Slf4j;
+import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
+import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
 
+@Slf4j
 public class JwtHelper {
 
     private JwtHelper() {
@@ -23,7 +26,8 @@ public class JwtHelper {
         // Il JWT è composto da: header.payload.signature
         String[] parts = token.split("\\.");
         if (parts.length != 3) {
-            throw new IllegalArgumentException("Invalid JWT token");
+            log.error(EnumErrori.INVALID_JWT.getDescription());
+            throw ResponseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT);
         }
 
         // Decodifica il payload (parte 2)
@@ -35,7 +39,8 @@ public class JwtHelper {
             Map<String, Object> payload = MAPPER.readValue(payloadJson, Map.class);
             return (String) payload.get("sub");
         } catch (Exception e) {
-            throw new ConfigRuntimeException("Error parsing JWT payload", e);
+            log.error(EnumErrori.INVALID_JWT_PAYLOAD.getDescription(), e);
+            throw ResponseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT_PAYLOAD);
         }
     }
 
