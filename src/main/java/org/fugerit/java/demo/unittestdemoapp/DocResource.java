@@ -93,9 +93,7 @@ public class DocResource {
             // return the output
             return baos.toByteArray();
         } catch (Exception e) {
-            String message = String.format("Error processing %s, error:%s", handlerId, e);
-            log.error(message, e);
-            throw new WebApplicationException(message, e);
+            throw ExceptionHelper.DEFAULT.apply(e);
         }
     }
 

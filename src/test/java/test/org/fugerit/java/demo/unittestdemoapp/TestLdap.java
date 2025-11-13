@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestLdap {
 
-    private static final InetAddress inetAddress = SafeFunction.get(() -> InetAddress.getLocalHost());
+    private static final InetAddress inetAddress = SafeFunction.get(InetAddress::getLocalHost);
     private static final String DOMAIN_DSN = "ou=users,dc=test,dc=it";
 
     private InMemoryDirectoryServer ldapServer;
