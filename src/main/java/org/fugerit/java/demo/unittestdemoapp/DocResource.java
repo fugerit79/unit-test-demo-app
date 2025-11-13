@@ -1,5 +1,6 @@
 package org.fugerit.java.demo.unittestdemoapp;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
@@ -7,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
-import org.fugerit.java.demo.unittestdemoapp.auth.AuthRoles;
 import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
 import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 import org.fugerit.java.doc.base.config.DocConfig;
@@ -21,8 +21,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import static org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles.ADMIN;
-import static org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles.USER;
+import static org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles.ADMIN_CODE;
+import static org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles.USER_CODE;
 
 @Slf4j
 @ApplicationScoped
@@ -48,7 +48,7 @@ public class DocResource {
     @Produces("text/html")
     @Path("/example.html")
     @SecurityRequirement(name = "bearerAuth")
-    @AuthRoles(roles = { ADMIN, USER })
+    @RolesAllowed({ ADMIN_CODE, USER_CODE })
     public Response htmlExample() {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_HTML)).build();
     }
@@ -62,7 +62,7 @@ public class DocResource {
     @Produces("text/markdown")
     @Path("/example.md")
     @SecurityRequirement(name = "bearerAuth")
-    @AuthRoles(roles = { ADMIN })
+    @RolesAllowed({ ADMIN_CODE })
     public Response markdownExample() {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_MD)).build();
     }
@@ -76,7 +76,7 @@ public class DocResource {
     @Produces("text/asciidoc")
     @Path("/example.adoc")
     @SecurityRequirement(name = "bearerAuth")
-    @AuthRoles(roles = { ADMIN })
+    @RolesAllowed({ ADMIN_CODE })
     public Response asciidocExample() {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
     }
@@ -96,6 +96,7 @@ public class DocResource {
             // return the output
             return baos.toByteArray();
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw this.responseHelper.createWebApplicationException500(EnumErrori.GENERIC_ERROR);
         }
     }

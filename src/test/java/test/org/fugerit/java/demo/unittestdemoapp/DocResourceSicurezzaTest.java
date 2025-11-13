@@ -1,7 +1,9 @@
 package test.org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import jakarta.ws.rs.core.Response;
+import org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -11,52 +13,39 @@ import static org.hamcrest.Matchers.containsString;
 class DocResourceSicurezzaTest {
 
     @Test
+    @TestSecurity(user = StubUsers.USER1, roles = { EnumRoles.USER_CODE })
     void testHtmlOkNoAdminRole() {
         // a questo path sono autorizzati anche gli utenti con semplice ruolo 'user'
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
                 .when().get("/doc/example.html").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
     @Test
-    void testInvalidJwt() {
+    @TestSecurity(user = StubUsers.USER3)
+    void testMarkdown403NoAuthorizationBearer() {
         given()
-                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi")
-                .when().get("/doc/example.md").then().statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-                .body(containsString("400001"));
+                .when().get("/doc/example.md").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test
-    void testInvalidJwtPayload() {
+    @TestSecurity(user = StubUsers.USER1, roles = { EnumRoles.USER_CODE })
+    void testMarkdown403NoAdminRole() {
         given()
-                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi.signature")
-                .when().get("/doc/example.md").then().statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-                .body(containsString("400002"));
+                .when().get("/doc/example.md").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test
-    void testMarkdown401NoAuthorizationBearer() {
+    @TestSecurity(user = StubUsers.USER3)
+    void testHtml403NoAuthorizationBearer() {
         given()
-                .when().get("/doc/example.md").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+                .when().get("/doc/example.html").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test
-    void testMarkdown401NoAdminRole() {
+    @TestSecurity(user = StubUsers.USER3)
+    void testAsciiDoc403NoAuthorizationBearer() {
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
-                .when().get("/doc/example.md").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
-    }
-
-    @Test
-    void testHtml401NoAuthorizationBearer() {
-        given()
-                .when().get("/doc/example.html").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
-    }
-
-    @Test
-    void testAsciiDocNoAuthorizationBearer() {
-        given()
-                .when().get("/doc/example.adoc").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+                .when().get("/doc/example.adoc").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
 }

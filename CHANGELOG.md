@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- refactor using @RoleAllowed annotation
 - la CI viene eseguita anche sul ramo develop
 - suddivisione test normali (DocResourceTest) / test sicurezza (DocResourceSicurezzaTest)
 
