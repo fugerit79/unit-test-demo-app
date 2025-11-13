@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- la CI viene eseguita anche sul ramo develop
 - suddivisione test normali (DocResourceTest) / test sicurezza (DocResourceSicurezzaTest)
 
 ## [1.0.0] - 2025-11-12
