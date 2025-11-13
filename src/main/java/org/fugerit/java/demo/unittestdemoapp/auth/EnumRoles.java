@@ -2,20 +2,23 @@ package org.fugerit.java.demo.unittestdemoapp.auth;
 
 public enum EnumRoles {
 
-    ADMIN("1", "admin", "Amministratore"),
-    USER("2", "user", "Utente");
+    ADMIN(1, "admin", "Amministratore"),
+    USER(2, "user", "Utente");
 
-    private String id;
+    public static final String ADMIN_CODE = "admin";
+    public static final String USER_CODE = "user";
+
+    private Integer id;
     private String code;
     private String description;
 
-    EnumRoles(String id, String code, String description) {
+    EnumRoles(Integer id, String code, String description) {
         this.id = id;
         this.code = code;
         this.description = description;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

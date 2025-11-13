@@ -2,6 +2,7 @@ package org.fugerit.java.demo.unittestdemoapp.auth;
 
 import io.vertx.core.http.HttpServerRequest;
 import jakarta.annotation.Priority;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
@@ -10,7 +11,6 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
-import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -19,6 +19,21 @@ import java.util.Arrays;
 @AuthRoles
 @Priority(value = 2)
 @Slf4j
+/**
+ * Interceptor per gestire i ruoli di autorizzazione
+ *
+ * Usa la annotation standard :
+ * jakarta.annotation.security.RolesAllowed
+ *
+ * Ecco un esempio di utilizzo :
+ *
+ * @SecurityRequirement(name = "bearerAuth")
+ *                           @RolesAllowed( {ADMIN_CODE, USER_CODE} )
+ *                           public Response htmlExample() {
+ *                           return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_HTML)).build();
+ *                           }
+ *
+ */
 public class AuthInterceptor {
 
     JwtHelper jwtHelper;
@@ -37,7 +52,7 @@ public class AuthInterceptor {
     public Object check(InvocationContext ctx) {
         try {
             Method m = ctx.getMethod();
-            EnumRoles[] roles = m.getAnnotation(AuthRoles.class).roles();
+            String[] roles = m.getAnnotation(RolesAllowed.class).value();
 
             String authorization = request.getHeader("Authorization");
             if (StringUtils.isNotEmpty(authorization)) {
@@ -46,9 +61,9 @@ public class AuthInterceptor {
                 this.userInfo.setSub(sub);
                 log.info("check roles {}", Arrays.asList(roles));
                 log.info("user  roles {}", this.userInfo.getRoles());
-                for (EnumRoles role : roles) {
+                for (String role : roles) {
                     for (EnumRoles current : this.userInfo.getRoles()) {
-                        if (current.getCode().equals(role.getCode())) {
+                        if (current.getCode().equals(role)) {
                             return ctx.proceed();
                         }
                     }

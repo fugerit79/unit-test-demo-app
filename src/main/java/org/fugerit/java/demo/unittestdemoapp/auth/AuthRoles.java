@@ -13,13 +13,13 @@ import java.lang.annotation.*;
  * Con questa annotation dichiaro quali ruoli sono necessari per
  * chiamare una certa API rest, ad esempio :
  *
- *     @AuthRoles(roles = { ADMIN })
- *     public Response asciidocExample() {
- *         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
- *     }
+ * @AuthRoles(roles = { ADMIN })
+ *                  public Response asciidocExample() {
+ *                  return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
+ *                  }
  *
  *
- * E gestita dall' interceptor : AuthInterceptor
+ *                  E gestita dall' interceptor : AuthInterceptor
  */
 public @interface AuthRoles {
 
