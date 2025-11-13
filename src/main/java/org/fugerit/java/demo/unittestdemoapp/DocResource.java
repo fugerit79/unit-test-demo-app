@@ -96,6 +96,7 @@ public class DocResource {
             // return the output
             return baos.toByteArray();
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw this.responseHelper.createWebApplicationException500(EnumErrori.GENERIC_ERROR);
         }
     }
