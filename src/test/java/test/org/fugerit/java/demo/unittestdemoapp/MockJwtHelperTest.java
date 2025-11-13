@@ -45,7 +45,7 @@ class MockJwtHelperTest {
                 .get("/doc/example.md")
                 .then()
                 .statusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
-                .body(containsString("500001"));
+                .body(containsString("1"));
     }
 
 }

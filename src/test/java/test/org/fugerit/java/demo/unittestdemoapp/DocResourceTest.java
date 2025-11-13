@@ -8,8 +8,10 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 class DocResourceTest {
 
+    // utente ADMIN
     public static final String JWT_USER1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUiOiJNYXJpZSBDdXJpZSIsImdpdmVuTmFtZSI6Ik1hcmllIiwic24iOiJDdXJpZSIsInJvbGVzIjpbImFkbWlucyIsInVzZXJzIiwic2NpZW50aXN0cyJdLCJpYXQiOjE3MzE0MjcyMDAsImV4cCI6MTczMTUxMzYwMH0.9kVrJ8FYmqxJ0_sZWxZ5QXN7vH8KGPdQzRp3YJ6xLMw";
 
+    // utente USER
     public static final String JWT_USER2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMiIsIm5hbWUiOiJQaWVycmUgQ3VyaWUiLCJnaXZlbk5hbWUiOiJQaWVycmUiLCJzbiI6IkN1cmllIiwicm9sZXMiOlsidXNlcnMiLCJzY2llbnRpc3RzIl0sImlhdCI6MTczMTQyNzIwMCwiZXhwIjoxNzMxNTEzNjAwfQ.8Z_xM3jYqNkL5TfVrWpE2HnJ9sQ6RtU4oPbKcA7wXeI";
 
     @Test
