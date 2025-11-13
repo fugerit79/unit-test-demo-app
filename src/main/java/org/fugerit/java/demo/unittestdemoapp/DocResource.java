@@ -1,6 +1,5 @@
 package org.fugerit.java.demo.unittestdemoapp;
 
-import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
@@ -28,6 +27,12 @@ import static org.fugerit.java.demo.unittestdemoapp.auth.EnumRoles.USER;
 @Path("/doc")
 @SecurityScheme(securitySchemeName = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT", description = "JWT Bearer Token Authentication")
 public class DocResource {
+
+    DocHelper docHelper;
+
+    public DocResource(DocHelper docHelper) {
+        this.docHelper = docHelper;
+    }
 
     @APIResponse(responseCode = "200", description = "The HTML document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
@@ -69,13 +74,6 @@ public class DocResource {
     @AuthRoles(roles = { ADMIN })
     public Response asciidocExample() {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
-    }
-
-    @Inject
-    DocHelper docHelper;
-
-    public DocResource(DocHelper docHelper) {
-        this.docHelper = docHelper;
     }
 
     byte[] processDocument(String handlerId) {

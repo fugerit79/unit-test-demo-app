@@ -1,6 +1,7 @@
 package org.fugerit.java.demo.unittestdemoapp.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class JwtHelper {
             Map<String, Object> payload = MAPPER.readValue(payloadJson, Map.class);
             return (String) payload.get("sub");
         } catch (Exception e) {
-            throw new RuntimeException("Error parsing JWT payload", e);
+            throw new ConfigRuntimeException("Error parsing JWT payload", e);
         }
     }
 
