@@ -23,13 +23,13 @@ class MockJwtHelperTest {
      *
      * Ad esempio in : AuthInterceptor
      *
-     *         } catch (WebApplicationException e) {
-     *             return e.getResponse();
-     *         } catch (Exception e) {
-     *             String message = String.format("Errore : %s", e.getMessage());
-     *             log.error(message, e);
-     *             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(EnumErrori.GENERIC_ERROR).build();
-     *         }
+     * } catch (WebApplicationException e) {
+     * return e.getResponse();
+     * } catch (Exception e) {
+     * String message = String.format("Errore : %s", e.getMessage());
+     * log.error(message, e);
+     * return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(EnumErrori.GENERIC_ERROR).build();
+     * }
      *
      * Andiamo a usare Mockito e QuarkusMock
      */
