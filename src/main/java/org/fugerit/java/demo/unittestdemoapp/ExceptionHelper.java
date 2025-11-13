@@ -13,7 +13,7 @@ public class ExceptionHelper {
     }
 
     public static final Function<Exception, WebApplicationException> DEFAULT = e -> {
-        String message = String.format("Error processing document, error:%s", e);
+        String message = String.format("Error processing document, error:%s", e.getMessage());
         log.error(message, e);
         return new WebApplicationException(message, e);
     };
