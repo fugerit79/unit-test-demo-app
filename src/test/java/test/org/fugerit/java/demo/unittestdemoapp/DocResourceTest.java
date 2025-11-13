@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.*;
-
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest

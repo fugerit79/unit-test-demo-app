@@ -5,6 +5,7 @@ import lombok.ToString;
 @ToString
 public enum EnumErrori {
 
+    GENERIC_ERROR(500001, "Errore interno"),
     INVALID_JWT(400001, "JWT Non Valido"),
     INVALID_JWT_PAYLOAD(400002, "Payload JWT Non valido");
 

@@ -9,6 +9,8 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
+import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -19,11 +21,14 @@ import java.util.Arrays;
 @Slf4j
 public class AuthInterceptor {
 
+    JwtHelper jwtHelper;
+
     HttpServerRequest request;
 
     UserInfo userInfo;
 
-    public AuthInterceptor(UserInfo userInfo, HttpServerRequest request) {
+    public AuthInterceptor(JwtHelper jwtHelper, UserInfo userInfo, HttpServerRequest request) {
+        this.jwtHelper = jwtHelper;
         this.userInfo = userInfo;
         this.request = request;
     }
@@ -36,8 +41,8 @@ public class AuthInterceptor {
 
             String authorization = request.getHeader("Authorization");
             if (StringUtils.isNotEmpty(authorization)) {
-                String sub = JwtHelper.getSubjectWithoutVerification(authorization);
-                JwtHelper.setupUser(sub, userInfo);
+                String sub = this.jwtHelper.getSubjectWithoutVerification(authorization);
+                this.jwtHelper.setupUser(sub, userInfo);
                 this.userInfo.setSub(sub);
                 log.info("check roles {}", Arrays.asList(roles));
                 log.info("user  roles {}", this.userInfo.getRoles());
@@ -51,20 +56,12 @@ public class AuthInterceptor {
             }
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (WebApplicationException e) {
-            if (e.getResponse() != null) {
-                return e.getResponse();
-            } else {
-                return this.handleException(e);
-            }
+            return e.getResponse();
         } catch (Exception e) {
-            return this.handleException(e);
+            String message = String.format("Errore : %s", e.getMessage());
+            log.error(message, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(EnumErrori.GENERIC_ERROR).build();
         }
-    }
-
-    private Response handleException(Exception e) {
-        String message = String.format("Errore : %s", e.getMessage());
-        log.error(message, e);
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
 }

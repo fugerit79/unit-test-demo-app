@@ -8,6 +8,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.fugerit.java.demo.unittestdemoapp.auth.AuthRoles;
+import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
+import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 import org.fugerit.java.doc.base.config.DocConfig;
 import org.fugerit.java.doc.base.process.DocProcessContext;
 
@@ -30,8 +32,11 @@ public class DocResource {
 
     DocHelper docHelper;
 
-    public DocResource(DocHelper docHelper) {
+    ResponseHelper responseHelper;
+
+    public DocResource(DocHelper docHelper, ResponseHelper responseHelper) {
         this.docHelper = docHelper;
+        this.responseHelper = responseHelper;
     }
 
     @APIResponse(responseCode = "200", description = "The HTML document content")
@@ -91,7 +96,7 @@ public class DocResource {
             // return the output
             return baos.toByteArray();
         } catch (Exception e) {
-            throw ExceptionHelper.DEFAULT.apply(e);
+            throw this.responseHelper.createWebApplicationException500(EnumErrori.GENERIC_ERROR);
         }
     }
 

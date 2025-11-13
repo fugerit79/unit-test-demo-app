@@ -1,6 +1,7 @@
 package org.fugerit.java.demo.unittestdemoapp.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.enterprise.context.ApplicationScoped;
 import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
 import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
@@ -12,14 +13,18 @@ import java.util.Base64;
 import java.util.Map;
 
 @Slf4j
+@ApplicationScoped
 public class JwtHelper {
 
-    private JwtHelper() {
+    ResponseHelper responseHelper;
+
+    public JwtHelper(ResponseHelper responseHelper) {
+        this.responseHelper = responseHelper;
     }
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static String getSubjectWithoutVerification(String token) {
+    public String getSubjectWithoutVerification(String token) {
         // Rimuovi "Bearer " se presente
         token = token.replace("Bearer ", "");
 
@@ -27,7 +32,7 @@ public class JwtHelper {
         String[] parts = token.split("\\.");
         if (parts.length != 3) {
             log.error(EnumErrori.INVALID_JWT.getDescription());
-            throw ResponseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT);
+            throw this.responseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT);
         }
 
         // Decodifica il payload (parte 2)
@@ -40,11 +45,11 @@ public class JwtHelper {
             return (String) payload.get("sub");
         } catch (Exception e) {
             log.error(EnumErrori.INVALID_JWT_PAYLOAD.getDescription(), e);
-            throw ResponseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT_PAYLOAD);
+            throw this.responseHelper.createWebApplicationException400(EnumErrori.INVALID_JWT_PAYLOAD);
         }
     }
 
-    public static void setupUser(String sub, UserInfo userInfo) {
+    public void setupUser(String sub, UserInfo userInfo) {
         userInfo.setSub(sub);
         if ("USER1".equalsIgnoreCase(sub)) {
             userInfo.setRoles(Arrays.asList(EnumRoles.USER, EnumRoles.ADMIN));
