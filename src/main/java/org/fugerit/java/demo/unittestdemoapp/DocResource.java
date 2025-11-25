@@ -81,6 +81,20 @@ public class DocResource {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
     }
 
+    @APIResponse(responseCode = "200", description = "The PDF document content")
+    @APIResponse(responseCode = "500", description = "In case of an unexpected error")
+    @Tag(name = "document")
+    @Tag(name = "pdf")
+    @Operation(operationId = "PDFExample", summary = "Example PDF generation", description = "Generates an example PDF document using Fugerit Venus Doc handler")
+    @GET
+    @Produces("application/pdf")
+    @Path("/example.pdf")
+    @SecurityRequirement(name = "bearerAuth")
+    @AuthRoles(roles = { ADMIN, USER })
+    public Response pdfExample() {
+        return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_PDF)).build();
+    }
+
     byte[] processDocument(String handlerId) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 

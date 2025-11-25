@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- output in PDF (autorizzazione ADMIN e USER)
 - profilo pom 'release', verifica che sia presente almeno un test per ogni tag "security", "authorized", "unauthorized", "forbidden"
 - junit tags "security", "authorized", "unauthorized", "forbidden"
 - test eccezione generica

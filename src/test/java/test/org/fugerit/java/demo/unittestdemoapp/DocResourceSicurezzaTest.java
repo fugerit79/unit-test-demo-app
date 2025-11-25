@@ -23,6 +23,16 @@ class DocResourceSicurezzaTest {
 
     @Test
     @Tag("security")
+    @Tag("authorized")
+    void testPdfOkNoAdminRole() {
+        // a questo path sono autorizzati anche gli utenti con semplice ruolo 'user'
+        given()
+                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
     @Tag("unauthorized")
     void testInvalidJwt() {
         given()
