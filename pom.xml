@@ -148,6 +148,8 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
         <configuration>
+          <groups>security,unauthorized,forbidden,authorized</groups>
+          <failIfNoTests>true</failIfNoTests>
           <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
             <maven.home>${maven.home}</maven.home>
@@ -241,6 +243,65 @@
         <skipITs>false</skipITs>
         <quarkus.native.enabled>true</quarkus.native.enabled>
       </properties>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+            <executions>
+              <!-- verifica che sia presente almeno un test per ogni tag :
+                - security
+                - authorized
+                - unauthorized
+                - forbidden
+               -->
+              <execution>
+                <id>verify-security-tests</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <groups>security</groups>
+                  <failIfNoTests>true</failIfNoTests>
+                </configuration>
+              </execution>
+              <execution>
+                <id>verify-authorized-tests</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <groups>authorized</groups>
+                  <failIfNoTests>true</failIfNoTests>
+                </configuration>
+              </execution>
+              <execution>
+                <id>verify-unauthorized-tests</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <groups>unauthorized</groups>
+                  <failIfNoTests>true</failIfNoTests>
+                </configuration>
+              </execution>
+              <execution>
+                <id>verify-forbidden-tests</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <groups>forbidden</groups>
+                  <failIfNoTests>true</failIfNoTests>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 </project>

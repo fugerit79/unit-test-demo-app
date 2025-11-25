@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - develop
+      - branch-tagging
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -30,4 +31,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=fugerit79 -Dsonar.projectKey=fugerit79_unit-test-demo-app
+        run: mvn -B verify -P release org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=fugerit79 -Dsonar.projectKey=fugerit79_unit-test-demo-app
