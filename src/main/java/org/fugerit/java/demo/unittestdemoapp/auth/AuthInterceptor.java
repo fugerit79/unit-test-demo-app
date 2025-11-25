@@ -53,6 +53,8 @@ public class AuthInterceptor {
                         }
                     }
                 }
+                // l'utente esiste ma non ha i ruoli necessari
+                return Response.status(Response.Status.FORBIDDEN).build();
             }
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } catch (WebApplicationException e) {

@@ -9,10 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- output in PDF (autorizzazione ADMIN e USER)
+- profilo pom 'release', verifica che sia presente almeno un test per ogni tag "security", "authorized", "unauthorized", "forbidden"
+- junit tags "security", "authorized", "unauthorized", "forbidden"
 - test eccezione generica
 
 ### Changed
 
+- Divisione tra 401 unauthorized quando l'utente non esiste e 403 forbidden quando non ha i ruoli necessari
 - la CI viene eseguita anche sul ramo develop
 - suddivisione test normali (DocResourceTest) / test sicurezza (DocResourceSicurezzaTest)
 

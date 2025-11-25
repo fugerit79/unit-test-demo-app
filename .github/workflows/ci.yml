@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - develop
+      - branch-tagging
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -25,8 +26,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build
-        run: mvn clean install
+      - name: Build and check test tags
+        run: mvn clean install -P release
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
