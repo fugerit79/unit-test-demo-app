@@ -298,6 +298,13 @@
                   <failIfNoTests>true</failIfNoTests>
                 </configuration>
               </execution>
+              <!-- esegue tutti i test -->
+              <execution>
+                <id>verify-all-tests</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+              </execution>
             </executions>
           </plugin>
         </plugins>
