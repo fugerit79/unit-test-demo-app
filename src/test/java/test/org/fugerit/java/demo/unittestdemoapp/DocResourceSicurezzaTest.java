@@ -41,10 +41,10 @@ class DocResourceSicurezzaTest {
     }
 
     @Test
-    void testMarkdown401NoAdminRole() {
+    void testMarkdown403NoAdminRole() {
         given()
                 .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
-                .when().get("/doc/example.md").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+                .when().get("/doc/example.md").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test

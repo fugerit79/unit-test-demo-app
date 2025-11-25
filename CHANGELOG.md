@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Divisione tra 401 unauthorized quando l'utente non esiste e 403 forbidden quando non ha i ruoli necessari
 - la CI viene eseguita anche sul ramo develop
 - suddivisione test normali (DocResourceTest) / test sicurezza (DocResourceSicurezzaTest)
 
