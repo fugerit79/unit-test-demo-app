@@ -20,7 +20,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <fj-doc-version>8.17.6</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <unit5-tag-check-maven-plugin>1.0.0</unit5-tag-check-maven-plugin>
+    <junit5-tag-check-maven-plugin>1.0.0</junit5-tag-check-maven-plugin>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -262,7 +262,7 @@
           <plugin>
             <groupId>org.fugerit.java</groupId>
             <artifactId>junit5-tag-check-maven-plugin</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${junit5-tag-check-maven-plugin}</version>
             <executions>
               <execution>
                 <id>report-executed-test-tags</id>
