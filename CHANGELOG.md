@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- utilizzo del plugin [junit5-tag-check-maven-plugi](https://github.com/fugerit-org/junit5-tag-check-maven-plugin) invece di surefire per il controllo tag
 - il profilo di verifica dei controlli ora si chiama 'security'
 
 ## [1.1.0] - 2025-11-24

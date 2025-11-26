@@ -20,6 +20,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <fj-doc-version>8.17.6</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <unit5-tag-check-maven-plugin>1.0.0</unit5-tag-check-maven-plugin>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -259,57 +260,26 @@
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${surefire-plugin.version}</version>
+            <groupId>org.fugerit.java</groupId>
+            <artifactId>junit5-tag-check-maven-plugin</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
             <executions>
-              <!-- verifica che sia presente almeno un test per ogni tag :
-                - security
-                - authorized
-                - unauthorized
-                - forbidden
-               -->
               <execution>
-                <id>verify-security-tests</id>
-                <phase>test</phase>
+                <id>report-executed-test-tags</id>
+                <phase>verify</phase>
                 <goals>
-                  <goal>test</goal>
+                  <goal>report-executed-tags</goal>
                 </goals>
                 <configuration>
-                  <groups>security</groups>
-                  <failIfNoTests>true</failIfNoTests>
-                </configuration>
-              </execution>
-              <execution>
-                <phase>test</phase>
-                <id>verify-authorized-tests</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <groups>authorized</groups>
-                  <failIfNoTests>true</failIfNoTests>
-                </configuration>
-              </execution>
-              <execution>
-                <phase>test</phase>
-                <id>verify-unauthorized-tests</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <groups>unauthorized</groups>
-                  <failIfNoTests>true</failIfNoTests>
-                </configuration>
-              </execution>
-              <execution>
-                <phase>test</phase>
-                <id>verify-forbidden-tests</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <groups>forbidden</groups>
-                  <failIfNoTests>true</failIfNoTests>
+                  <format>html</format>
+                  <outputFile>${project.build.directory}/executed-test-tag-report.html</outputFile>
+                  <requiredTags>
+                    <requiredTag>security</requiredTag>
+                    <requiredTag>authorized</requiredTag>
+                    <requiredTag>unauthorized</requiredTag>
+                    <requiredTag>forbidden</requiredTag>
+                  </requiredTags>
+                  <failOnMissingTag>true</failOnMissingTag>
                 </configuration>
               </execution>
             </executions>
