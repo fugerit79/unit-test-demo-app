@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- il profilo di verifica dei controlli ora si chiama 'security'
+
 ## [1.1.0] - 2025-11-24
 
 ### Added

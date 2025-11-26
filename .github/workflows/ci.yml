@@ -26,9 +26,9 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and check test tags
-        run: mvn clean install -P release
+      - name: Check security unit test tags
+        run: mvn verify -P security
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=fugerit79 -Dsonar.projectKey=fugerit79_unit-test-demo-app
+        run: mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=fugerit79 -Dsonar.projectKey=fugerit79_unit-test-demo-app
