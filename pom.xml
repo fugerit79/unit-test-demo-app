@@ -18,7 +18,7 @@
     <freemarker-native-version>1.0.0</freemarker-native-version>
     <skipITs>true</skipITs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <fj-doc-version>8.17.6</fj-doc-version>
+    <fj-doc-version>8.17.9</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <junit5-tag-check-maven-plugin-version>1.1.0</junit5-tag-check-maven-plugin-version>
     <junit5-tag-check-maven-plugin-format>html</junit5-tag-check-maven-plugin-format>
