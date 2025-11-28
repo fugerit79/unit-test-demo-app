@@ -20,7 +20,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <fj-doc-version>8.17.6</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <junit5-tag-check-maven-plugin>1.0.0</junit5-tag-check-maven-plugin>
+    <junit5-tag-check-maven-plugin-version>1.1.0</junit5-tag-check-maven-plugin-version>
+    <junit5-tag-check-maven-plugin-format>html</junit5-tag-check-maven-plugin-format>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -262,7 +263,7 @@
           <plugin>
             <groupId>org.fugerit.java</groupId>
             <artifactId>junit5-tag-check-maven-plugin</artifactId>
-            <version>${junit5-tag-check-maven-plugin}</version>
+            <version>${junit5-tag-check-maven-plugin-version}</version>
             <executions>
               <execution>
                 <id>report-executed-test-tags</id>
@@ -272,7 +273,7 @@
                 </goals>
                 <configuration>
                   <format>html</format>
-                  <outputFile>${project.build.directory}/executed-test-tag-report.html</outputFile>
+                  <outputFile>${project.build.directory}/executed-test-tag-report.${junit5-tag-check-maven-plugin-format}</outputFile>
                   <requiredTags>
                     <requiredTag>security</requiredTag>
                     <requiredTag>authorized</requiredTag>
