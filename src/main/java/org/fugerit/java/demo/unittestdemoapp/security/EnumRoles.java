@@ -1,4 +1,4 @@
-package org.fugerit.java.demo.unittestdemoapp.auth;
+package org.fugerit.java.demo.unittestdemoapp.security;
 
 public enum EnumRoles {
 
