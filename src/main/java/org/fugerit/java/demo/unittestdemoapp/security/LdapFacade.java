@@ -12,7 +12,7 @@ import java.util.Set;
 @ApplicationScoped
 public class LdapFacade {
 
-    private static Map<String, Set<String>> LDAP_USERS_MOCK = new HashMap<>();
+    private static final Map<String, Set<String>> LDAP_USERS_MOCK = new HashMap<>();
     static {
         // mappatura stub utenti
         LDAP_USERS_MOCK.put("USER1", Set.of(EnumRoles.USER.getCode()));

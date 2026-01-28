@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 
 import java.io.StringReader;
 import java.util.Base64;
@@ -29,7 +30,7 @@ public class UnsecuredJwtParser {
 
         } catch (Exception e) {
             log.error("Failed to parse JWT token", e);
-            throw new RuntimeException("Invalid JWT token", e);
+            throw new ConfigRuntimeException("Invalid JWT token", e);
         }
     }
 

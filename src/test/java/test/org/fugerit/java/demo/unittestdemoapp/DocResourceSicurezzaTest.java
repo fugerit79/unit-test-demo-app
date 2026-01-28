@@ -82,8 +82,18 @@ class DocResourceSicurezzaTest {
     @Tag("security")
     @Tag("unauthorized")
     @Tag("Bearer")
-    void testUnauthorizedWithJwt() {
+    void testUnauthorizedWithoutJwt() {
         given()
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("unauthorized")
+    @Tag("Bearer")
+    void testUnauthorizedWithWrongJwt() {
+        given()
+                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi")
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 

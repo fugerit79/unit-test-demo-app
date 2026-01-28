@@ -24,7 +24,7 @@ public class JwtIdentityProvider implements IdentityProvider<JwtAuthenticationRe
         // Crea una SecurityIdentity base con SOLO il principal
         // I ruoli verranno aggiunti dal LdapSecurityIdentityAugmentor
         QuarkusSecurityIdentity.Builder builder = QuarkusSecurityIdentity.builder();
-        builder.setPrincipal(() -> request.getUsername());
+        builder.setPrincipal(request::getUsername);
         builder.setAnonymous(false);
 
         // IMPORTANTE: Ritorna l'identity tramite Uni

@@ -19,8 +19,11 @@ import java.util.Set;
 @Slf4j
 public class JwtAuthenticationMechanism implements HttpAuthenticationMechanism {
 
-    @Inject
     UnsecuredJwtParser jwtParser;
+
+    public JwtAuthenticationMechanism(UnsecuredJwtParser jwtParser) {
+        this.jwtParser = jwtParser;
+    }
 
     @Override
     public Uni<SecurityIdentity> authenticate(RoutingContext context, IdentityProviderManager identityProviderManager) {
