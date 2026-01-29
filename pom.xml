@@ -8,10 +8,10 @@
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <mvn-formatter-plugin-version>2.29.0</mvn-formatter-plugin-version>
-    <quarkus.platform.version>3.29.1</quarkus.platform.version>
+    <quarkus.platform.version>3.31.1</quarkus.platform.version>
     <format.skip>false</format.skip>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <compiler-plugin.version>3.14.0</compiler-plugin.version>
+    <compiler-plugin.version>3.14.1</compiler-plugin.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <surefire-plugin.version>3.3.1</surefire-plugin.version>
     <fugerit-code-rules-version>0.1.1</fugerit-code-rules-version>
