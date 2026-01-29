@@ -1,6 +1,7 @@
 package test.org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,27 +17,27 @@ class DocResourceTest {
     @Test
     @Tag("business")
     @Tag("success")
+    @TestSecurity(user = "USER2", roles = { "user", "admin" })
     void testMarkdownOk() {
         given()
-                .header("Authorization", "Bearer " + JWT_USER1)
                 .when().get("/doc/example.md").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
     @Test
     @Tag("business")
     @Tag("success")
+    @TestSecurity(user = "USER1", roles = { "user" })
     void testHtmlOk() {
         given()
-                .header("Authorization", "Bearer " + JWT_USER1)
                 .when().get("/doc/example.html").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
     @Test
     @Tag("business")
     @Tag("success")
+    @TestSecurity(user = "USER2", roles = { "user", "admin" })
     void testAsciiDocOk() {
         given()
-                .header("Authorization", "Bearer " + JWT_USER1)
                 .when().get("/doc/example.adoc").then().statusCode(Response.Status.OK.getStatusCode());
     }
 

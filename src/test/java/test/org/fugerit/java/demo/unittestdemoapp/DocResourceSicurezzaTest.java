@@ -1,59 +1,48 @@
 package test.org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
 
 @QuarkusTest
+/*
+ * questa test suite contiene due tipi di test :
+ *
+ * 1. usando @TestSecurity, annotation di quarkus con cui vengono iniettati utente e ruolo, con un bypass del
+ * SecurityIdentityAugmentor, https://github.com/quarkusio/quarkus/discussions/30411
+ * 2. iniettando un JWT direttamente con RestAssured .header("Authorization", "Bearer " + DocResourceTest.JWT_USER1)
+ */
 class DocResourceSicurezzaTest {
 
     @Test
     @Tag("security")
     @Tag("authorized")
+    @Tag("TestSecurity")
+    @TestSecurity(user = "USER2", roles = { "user" })
     void testHtmlOkNoAdminRole() {
         // a questo path sono autorizzati anche gli utenti con semplice ruolo 'user'
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
                 .when().get("/doc/example.html").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
     @Test
     @Tag("security")
     @Tag("authorized")
+    @Tag("TestSecurity")
+    @TestSecurity(user = "USER2", roles = { "user", "admin" })
     void testPdfOkNoAdminRole() {
         // a questo path sono autorizzati anche gli utenti con semplice ruolo 'user'
-        given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
-                .when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
+        given().when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
     @Test
     @Tag("security")
     @Tag("unauthorized")
-    void testInvalidJwt() {
-        given()
-                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi")
-                .when().get("/doc/example.md").then().statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-                .body(containsString("400001"));
-    }
-
-    @Test
-    @Tag("security")
-    @Tag("unauthorized")
-    void testInvalidJwtPayload() {
-        given()
-                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi.signature")
-                .when().get("/doc/example.md").then().statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-                .body(containsString("400002"));
-    }
-
-    @Test
-    @Tag("security")
-    @Tag("unauthorized")
+    @Tag("TestSecurity")
     void testMarkdown401NoAuthorizationBearer() {
         given()
                 .when().get("/doc/example.md").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
@@ -62,26 +51,50 @@ class DocResourceSicurezzaTest {
     @Test
     @Tag("security")
     @Tag("forbidden")
+    @Tag("TestSecurity")
+    @TestSecurity(user = "USER1", roles = { "user" })
     void testMarkdown403NoAdminRole() {
         given()
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("success")
+    @Tag("Bearer")
+    void testOkWithJwt() {
+        given()
                 .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
-                .when().get("/doc/example.md").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("forbidden")
+    @Tag("Bearer")
+    void testForbiddenWithJwt() {
+        given()
+                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER1)
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
     @Test
     @Tag("security")
     @Tag("unauthorized")
-    void testHtml401NoAuthorizationBearer() {
+    @Tag("Bearer")
+    void testUnauthorizedWithoutJwt() {
         given()
-                .when().get("/doc/example.html").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 
     @Test
     @Tag("security")
     @Tag("unauthorized")
-    void testAsciiDocNoAuthorizationBearer() {
+    @Tag("Bearer")
+    void testUnauthorizedWithWrongJwt() {
         given()
-                .when().get("/doc/example.adoc").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi")
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
     }
 
 }

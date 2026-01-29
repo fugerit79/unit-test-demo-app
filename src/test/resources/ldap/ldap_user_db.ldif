@@ -15,12 +15,12 @@ userPassword: Test2024
 cn: USER1
 cn:: U29uZHJlIEVpa2FuZ2VyIEt2YWzDuA==
 sn: Curie
-description: Marie Curie
-givenName: Marie
+description: USER1
+givenName: USER1
 businessCategory: admin
 businessCategory: user
 
-dn: cn=CCCDDD80A01H501X,ou=users,dc=test,dc=it
+dn: cn=USER2,ou=users,dc=test,dc=it
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -29,7 +29,7 @@ uid: USER2
 userPassword: Test2024
 cn: USER2
 cn:: U29uZHJlIEVpa2FuZ2VyIEt2YWzDuA==
-sn: Curie
-description: Pierre Curie
-givenName: Pierre
+sn: USER2
+description: USER2
+givenName: USER2
 businessCategory: user
