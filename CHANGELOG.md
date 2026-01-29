@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-01-29
+
 ### Changed
 
 - utilizzo del plugin [junit5-tag-check-maven-plugi](https://github.com/fugerit-org/junit5-tag-check-maven-plugin) invece di surefire per il controllo tag
