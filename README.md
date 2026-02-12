@@ -7,6 +7,7 @@ Questo progetto mostra come è possibile definire dei criteri minimi di complian
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fugerit79_unit-test-demo-app&metric=coverage)](https://sonarcloud.io/summary/new_code?id=fugerit79_unit-test-demo-app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](https://opensource.org/licenses/MIT)
 [![code of conduct](https://img.shields.io/badge/conduct-Contributor%20Covenant-purple.svg)](https://github.com/fugerit-org/fj-universe/blob/main/CODE_OF_CONDUCT.md)
+[![CI workflow](https://github.com/fugerit79/unit-test-demo-app/actions/workflows/ci.yml/badge.svg)](https://github.com/fugerit79/unit-test-demo-app/actions/workflows/ci.yml)
 
 ## Quickstart
 
