@@ -13,7 +13,7 @@ Questo progetto mostra come è possibile definire dei criteri minimi di complian
 Requirement :
 
 * maven 3.9.x
-* java 21+ (GraalVM for native version)
+* java 21+
 
 1. Verify the app
 
@@ -109,7 +109,7 @@ Un effetto collaterale dell'utilizzo del profilo 'security' è che vengono esegu
 
 Nella nostra CI per ovviare a questa situazione, abbiamo separato lo step di verifica da quello per il calcolo del quality gate e coverage.
 
-```yamnl
+```yaml
       - name: Check security unit test tags
         run: mvn verify -P security
       - name: Build and analyze

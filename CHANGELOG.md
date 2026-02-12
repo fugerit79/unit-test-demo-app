@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- quarkus version 3.31.3
+- junit5-tag-check-maven-plugin version 1.2.2
+
 ## [1.2.0] - 2026-01-29
 
 ### Changed
 
-- utilizzo del plugin [junit5-tag-check-maven-plugi](https://github.com/fugerit-org/junit5-tag-check-maven-plugin) invece di surefire per il controllo tag
+- utilizzo del plugin [junit5-tag-check-maven-plugin](https://github.com/fugerit-org/junit5-tag-check-maven-plugin) invece di surefire per il controllo tag
 - il profilo di verifica dei controlli ora si chiama 'security'
 - quarkus version 3.31.1
 
