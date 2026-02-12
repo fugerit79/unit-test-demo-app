@@ -10,8 +10,9 @@ class ResponseHelperTest {
     @Test
     void testResponseHelper() {
         ResponseHelper helper = new ResponseHelper();
-        Assertions.assertEquals( 500, helper.createWebApplicationException500( EnumErrori.GENERIC_ERROR ).getResponse().getStatus() );
-        Assertions.assertEquals( 400, helper.createWebApplicationException400( EnumErrori.INVALID_JWT ).getResponse().getStatus() );
+        Assertions.assertEquals(500,
+                helper.createWebApplicationException500(EnumErrori.GENERIC_ERROR).getResponse().getStatus());
+        Assertions.assertEquals(400, helper.createWebApplicationException400(EnumErrori.INVALID_JWT).getResponse().getStatus());
     }
 
 }

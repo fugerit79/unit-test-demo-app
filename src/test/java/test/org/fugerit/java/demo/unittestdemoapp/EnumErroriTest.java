@@ -9,8 +9,8 @@ class EnumErroriTest {
     @Test
     void testEnumErrori() {
         EnumErrori ee = EnumErrori.GENERIC_ERROR;
-        Assertions.assertEquals( 500001, ee.getCode() );
-        Assertions.assertEquals( "Errore interno", ee.getDescription() );
+        Assertions.assertEquals(500001, ee.getCode());
+        Assertions.assertEquals("Errore interno", ee.getDescription());
     }
 
 }
