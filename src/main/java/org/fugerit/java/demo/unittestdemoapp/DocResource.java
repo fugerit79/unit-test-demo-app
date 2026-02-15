@@ -39,7 +39,7 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The HTML document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Operation(operationId = "HTMLExample", summary = "Example HTML generation", description = "Generates an example HTML document using Fugerit Venus Doc handler")
+    @Operation(operationId = "HTMLExample", summary = "Versione HTML del documento (ruoli: admin, user)", description = "Generato con Fugerti Venus Doc https://venusdocs.fugerit.org/")
     @GET
     @Produces("text/html")
     @Path("/example.html")
@@ -52,12 +52,12 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The Markdown document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Operation(operationId = "MarkdownExample", summary = "Example Markdown generation", description = "Generates an example Markdown document using Fugerit Venus Doc handler")
+    @Operation(operationId = "MarkdownExample", summary = "Versione MarkDown del documento (ruoli: admin, user, guest)", description = "Generato con Fugerti Venus Doc https://venusdocs.fugerit.org/")
     @GET
     @Produces("text/markdown")
     @Path("/example.md")
     @SecurityRequirement(name = "bearerAuth")
-    @RolesAllowed("admin")
+    @RolesAllowed({ "admin", "user", "guest" })
     public Response markdownExample() {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_MD)).build();
     }
@@ -65,7 +65,7 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The AsciiDoc document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Operation(operationId = "AsciiDocExample", summary = "Example AsciiDoc generation", description = "Generates an example AsciiDoc document using Fugerit Venus Doc handler")
+    @Operation(operationId = "AsciiDocExample", summary = "Versione AsciiDoc del documento (ruoli: admin)", description = "Generato con Fugerti Venus Doc https://venusdocs.fugerit.org/")
     @GET
     @Produces("text/asciidoc")
     @Path("/example.adoc")
@@ -78,7 +78,7 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The PDF document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Operation(operationId = "PDFExample", summary = "Example PDF generation", description = "Generates an example PDF document using Fugerit Venus Doc handler")
+    @Operation(operationId = "PDFExample", summary = "Versione AsciiDoc del documento (ruoli: admin)", description = "Generato con Fugerti Venus Doc https://venusdocs.fugerit.org/")
     @GET
     @Produces("application/pdf")
     @Path("/example.pdf")

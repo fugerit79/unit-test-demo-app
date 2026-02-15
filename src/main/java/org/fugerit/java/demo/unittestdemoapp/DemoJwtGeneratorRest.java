@@ -24,8 +24,8 @@ public class DemoJwtGeneratorRest {
     private static final String ISSUER = "https://unittestdemoapp.fugerit.org";
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
-    @Tag(name = "demo")
-    @Operation(operationId = "adminToken", summary = "Genera un nuovo Token con permessi di amministratore", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
+    @Tag(name = "jwt authorization demo")
+    @Operation(operationId = "adminToken", summary = "Genera un nuovo Token con permessi di amministratore (admin).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
     @GET
     @Produces("text/plain")
     @Path("/new-admin-jwt.txt")
@@ -34,8 +34,8 @@ public class DemoJwtGeneratorRest {
     }
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
-    @Tag(name = "demo")
-    @Operation(operationId = "userToken", summary = "Genera un nuovo Token con permessi di utente", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
+    @Tag(name = "jwt authorization demo")
+    @Operation(operationId = "userToken", summary = "Genera un nuovo Token con permessi di utente (user).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
     @GET
     @Produces("text/plain")
     @Path("/new-user-jwt.txt")
@@ -44,8 +44,8 @@ public class DemoJwtGeneratorRest {
     }
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
-    @Tag(name = "demo")
-    @Operation(operationId = "guestToken", summary = "Genera un nuovo Token con permessi di ospite.", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
+    @Tag(name = "jwt authorization demo")
+    @Operation(operationId = "guestToken", summary = "Genera un nuovo Token con permessi di ospite (guest).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
     @GET
     @Produces("text/plain")
     @Path("/new-guest-jwt.txt")

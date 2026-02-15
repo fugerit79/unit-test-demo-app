@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
  *
  * 1. usando @TestSecurity, annotation di quarkus con cui vengono iniettati utente e ruolo, con un bypass del
  * SecurityIdentityAugmentor, https://github.com/quarkusio/quarkus/discussions/30411
- * 2. iniettando un JWT direttamente con RestAssured .header("Authorization", "Bearer " + DocResourceTest.JWT_USER1)
+ * 2. iniettando un JWT direttamente con RestAssured .header("Authorization", "Bearer " + "${JWT}")
  */
 class DocResourceSicurezzaTest {
 
@@ -95,6 +95,26 @@ class DocResourceSicurezzaTest {
         given()
                 .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVU0VSMSIsIm5hbWUi")
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.UNAUTHORIZED.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("authorized")
+    @Tag("Bearer")
+    void testOkJwtMarkDown() {
+        given()
+                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateGuestToken()))
+                .when().get("/doc/example.md").then().statusCode(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("authorized")
+    @Tag("Bearer")
+    void testOkJwtAsciiDoc() {
+        given()
+                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateAdminToken()))
+                .when().get("/doc/example.adoc").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
 }
