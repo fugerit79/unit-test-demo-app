@@ -1,4 +1,4 @@
-package test.org.fugerit.java.demo.unittestdemoapp;
+package org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;

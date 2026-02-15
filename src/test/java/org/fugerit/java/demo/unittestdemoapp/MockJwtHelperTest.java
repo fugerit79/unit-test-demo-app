@@ -1,10 +1,9 @@
-package test.org.fugerit.java.demo.unittestdemoapp;
+package org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
-import org.fugerit.java.demo.unittestdemoapp.DocHelper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -39,7 +38,7 @@ class MockJwtHelperTest {
 
         // Esegui il test
         given()
-                .header("Authorization", "Bearer %s".formatted(JwtGenerator.generateUserToken()))
+                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateUserToken()))
                 .when()
                 .get("/doc/example.md")
                 .then()

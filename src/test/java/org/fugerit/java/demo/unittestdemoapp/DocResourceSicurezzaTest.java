@@ -1,4 +1,4 @@
-package test.org.fugerit.java.demo.unittestdemoapp;
+package org.fugerit.java.demo.unittestdemoapp;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
@@ -64,7 +64,7 @@ class DocResourceSicurezzaTest {
     @Tag("Bearer")
     void testOkWithJwt() {
         given()
-                .header("Authorization", String.format("Bearer %s", JwtGenerator.generateAdminToken()))
+                .header("Authorization", String.format("Bearer %s", DemoJwtGeneratorRest.generateAdminToken()))
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
@@ -74,7 +74,7 @@ class DocResourceSicurezzaTest {
     @Tag("Bearer")
     void testForbiddenWithJwt() {
         given()
-                .header("Authorization", "Bearer %s".formatted(JwtGenerator.generateForbiddenToken()))
+                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateForbiddenToken()))
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 

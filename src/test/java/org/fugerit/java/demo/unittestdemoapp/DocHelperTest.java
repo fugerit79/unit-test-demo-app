@@ -1,5 +1,5 @@
 // generated from template 'DocHelperTest.ftl' on 2025-11-12T22:44:26.157+01:00
-package test.org.fugerit.java.demo.unittestdemoapp;
+package org.fugerit.java.demo.unittestdemoapp;
 
 import org.fugerit.java.demo.unittestdemoapp.DocHelper;
 import org.fugerit.java.demo.unittestdemoapp.People;

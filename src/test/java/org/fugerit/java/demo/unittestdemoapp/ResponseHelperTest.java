@@ -1,4 +1,4 @@
-package test.org.fugerit.java.demo.unittestdemoapp;
+package org.fugerit.java.demo.unittestdemoapp;
 
 import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
 import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
