@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- quarkus version 3.31.3
+- adesso viene usato un JWT generato e consumato con chiavi interne <https://github.com/fugerit79/unit-test-demo-app/issues/11>
+- quarkus version 3.31.1
 - junit5-tag-check-maven-plugin version 1.2.2
 
 ## [1.2.0] - 2026-01-29
