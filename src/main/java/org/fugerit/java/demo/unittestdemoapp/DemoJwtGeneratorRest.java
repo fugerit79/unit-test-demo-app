@@ -40,7 +40,7 @@ public class DemoJwtGeneratorRest {
     @Produces("text/plain")
     @Path("/new-user-jwt.txt")
     public Response newUserToken() {
-        return Response.status(Response.Status.CREATED).entity(generateAdminToken()).build();
+        return Response.status(Response.Status.CREATED).entity(generateUserToken()).build();
     }
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
