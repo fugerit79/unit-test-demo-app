@@ -14,21 +14,7 @@ class DemoJwtGeneratorRestTest {
     @Tag("demo")
     void testDemoAdminToken() {
         given()
-                .when().get("/demo/new-admin-jwt.txt").then().statusCode(Response.Status.CREATED.getStatusCode());
-    }
-
-    @Test
-    @Tag("demo")
-    void testDemoUserToken() {
-        given()
-                .when().get("/demo/new-user-jwt.txt").then().statusCode(Response.Status.CREATED.getStatusCode());
-    }
-
-    @Test
-    @Tag("demo")
-    void testDemoGuestToken() {
-        given()
-                .when().get("/demo/new-guest-jwt.txt").then().statusCode(Response.Status.CREATED.getStatusCode());
+                .when().get("/demo/admin,user,guest.txt").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
 }

@@ -8,12 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
-import org.fugerit.java.demo.unittestdemoapp.util.EnumErrori;
-import org.fugerit.java.demo.unittestdemoapp.util.ResponseHelper;
 import org.fugerit.java.doc.base.config.DocConfig;
 import org.fugerit.java.doc.base.process.DocProcessContext;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,11 +28,8 @@ public class DocResource {
 
     DocHelper docHelper;
 
-    ResponseHelper responseHelper;
-
-    public DocResource(DocHelper docHelper, ResponseHelper responseHelper) {
+    public DocResource(DocHelper docHelper) {
         this.docHelper = docHelper;
-        this.responseHelper = responseHelper;
     }
 
     @APIResponse(responseCode = "200", description = "The HTML document content")
@@ -45,7 +41,7 @@ public class DocResource {
     @Path("/example.html")
     @SecurityRequirement(name = "bearerAuth")
     @RolesAllowed({ "admin", "user" })
-    public Response htmlExample() {
+    public Response htmlExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_HTML)).build();
     }
 
@@ -58,7 +54,7 @@ public class DocResource {
     @Path("/example.md")
     @SecurityRequirement(name = "bearerAuth")
     @RolesAllowed({ "admin", "user", "guest" })
-    public Response markdownExample() {
+    public Response markdownExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_MD)).build();
     }
 
@@ -71,7 +67,7 @@ public class DocResource {
     @Path("/example.adoc")
     @SecurityRequirement(name = "bearerAuth")
     @RolesAllowed("admin")
-    public Response asciidocExample() {
+    public Response asciidocExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();
     }
 
@@ -83,7 +79,7 @@ public class DocResource {
     @Produces("application/pdf")
     @Path("/example.pdf")
     @RolesAllowed("admin")
-    public Response pdfExample() {
+    public Response pdfExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_PDF)).build();
     }
 
@@ -91,7 +87,7 @@ public class DocResource {
      * metodo worker che genera effettivamente i documenti tramite il framework :
      * https://github.com/fugerit-org/fj-doc ( documentazione : https://venusdocs.fugerit.org/ )
      */
-    byte[] processDocument(String handlerId) {
+    byte[] processDocument(String handlerId) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
             // create custom data for the fremarker template 'document.ftl'
@@ -105,8 +101,6 @@ public class DocResource {
                     handlerId, baos);
             // return the output
             return baos.toByteArray();
-        } catch (Exception e) {
-            throw this.responseHelper.createWebApplicationException500(EnumErrori.GENERIC_ERROR);
         }
     }
 

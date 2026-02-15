@@ -12,8 +12,7 @@ import static io.restassured.RestAssured.given;
 /*
  * questa test suite contiene due tipi di test :
  *
- * 1. usando @TestSecurity, annotation di quarkus con cui vengono iniettati utente e ruolo, con un bypass del
- * SecurityIdentityAugmentor, https://github.com/quarkusio/quarkus/discussions/30411
+ * 1. usando @TestSecurity, annotation di quarkus con cui vengono iniettati utente e ruolo
  * 2. iniettando un JWT direttamente con RestAssured .header("Authorization", "Bearer " + "${JWT}")
  */
 class DocResourceSicurezzaTest {
@@ -115,6 +114,16 @@ class DocResourceSicurezzaTest {
         given()
                 .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateAdminToken()))
                 .when().get("/doc/example.adoc").then().statusCode(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    @Tag("security")
+    @Tag("authorized")
+    @Tag("Bearer")
+    void testForbiddenJwtAsciiDoc() {
+        given()
+                .header("Authorization", "Bearer %s".formatted(new DemoJwtGeneratorRest().newToken( "guest" )))
+                .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
 }

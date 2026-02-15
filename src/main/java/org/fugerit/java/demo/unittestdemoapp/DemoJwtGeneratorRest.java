@@ -4,6 +4,7 @@ import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fugerit.java.demo.unittestdemoapp.security.EnumRoles;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -25,32 +27,12 @@ public class DemoJwtGeneratorRest {
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
     @Tag(name = "jwt authorization demo")
-    @Operation(operationId = "adminToken", summary = "Genera un nuovo Token con permessi di amministratore (admin).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
+    @Operation(operationId = "adminToken", summary = "Genera un nuovo JWT, i ruoli vanno passati come path param, separati da una virgola. (es. 'admin,user,guest')", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
     @GET
     @Produces("text/plain")
-    @Path("/new-admin-jwt.txt")
-    public Response newAdminToken() {
-        return Response.status(Response.Status.CREATED).entity(generateAdminToken()).build();
-    }
-
-    @APIResponse(responseCode = "201", description = "Generazione del JWT")
-    @Tag(name = "jwt authorization demo")
-    @Operation(operationId = "userToken", summary = "Genera un nuovo Token con permessi di utente (user).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
-    @GET
-    @Produces("text/plain")
-    @Path("/new-user-jwt.txt")
-    public Response newUserToken() {
-        return Response.status(Response.Status.CREATED).entity(generateUserToken()).build();
-    }
-
-    @APIResponse(responseCode = "201", description = "Generazione del JWT")
-    @Tag(name = "jwt authorization demo")
-    @Operation(operationId = "guestToken", summary = "Genera un nuovo Token con permessi di ospite (guest).", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
-    @GET
-    @Produces("text/plain")
-    @Path("/new-guest-jwt.txt")
-    public Response newGuestToken() {
-        return Response.status(Response.Status.CREATED).entity(generateGuestToken()).build();
+    @Path("/{roles}.txt")
+    public String newToken(@PathParam("roles") String roles) {
+        return generateToken("DEMOUSER", roles.split(","));
     }
 
     /**
@@ -89,7 +71,7 @@ public class DemoJwtGeneratorRest {
      * @param username lo username da usare per il JWT (verrà inserito come upn e claim sub)
      * @param roles l'elenco dei ruoli da associare all'utente
      *
-     * return il token JWT generato
+     *        return il token JWT generato
      */
     public static String generateToken(String username, String... roles) {
         return Jwt.issuer(ISSUER)
