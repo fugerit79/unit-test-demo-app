@@ -64,7 +64,7 @@ class DocResourceSicurezzaTest {
     @Tag("Bearer")
     void testOkWithJwt() {
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER2)
+                .header("Authorization", String.format("Bearer %s", JwtGenerator.generateAdminToken()))
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.OK.getStatusCode());
     }
 
@@ -74,7 +74,7 @@ class DocResourceSicurezzaTest {
     @Tag("Bearer")
     void testForbiddenWithJwt() {
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER1)
+                .header("Authorization", "Bearer %s".formatted(JwtGenerator.generateForbiddenToken()))
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 

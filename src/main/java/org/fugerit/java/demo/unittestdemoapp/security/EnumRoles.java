@@ -2,6 +2,7 @@ package org.fugerit.java.demo.unittestdemoapp.security;
 
 public enum EnumRoles {
 
+    GUEST("3", "guest", "Ospite"),
     ADMIN("1", "admin", "Amministratore"),
     USER("2", "user", "Utente");
 

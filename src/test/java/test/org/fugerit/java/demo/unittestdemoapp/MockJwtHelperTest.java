@@ -4,19 +4,18 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
-import org.fugerit.java.demo.unittestdemoapp.security.UnsecuredJwtParser;
+import org.fugerit.java.demo.unittestdemoapp.DocHelper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.any;
 
 @QuarkusTest
 class MockJwtHelperTest {
 
     @InjectMock
-    UnsecuredJwtParser jwtHelper;
+    DocHelper docHelper;
 
     /**
      * Se la gestione dell'errore è fatta correttamente, può essere complicato testare l'eccezione generica.
@@ -36,11 +35,11 @@ class MockJwtHelperTest {
     @Test
     void testGenericErrorWithMockGeneric() {
         Mockito.doThrow(
-                new ConfigRuntimeException("Mock exception")).when(jwtHelper).getSubject(any());
+                new ConfigRuntimeException("Mock exception")).when(this.docHelper).getDocProcessConfig();
 
         // Esegui il test
         given()
-                .header("Authorization", "Bearer " + DocResourceTest.JWT_USER1)
+                .header("Authorization", "Bearer %s".formatted(JwtGenerator.generateUserToken()))
                 .when()
                 .get("/doc/example.md")
                 .then()
