@@ -54,7 +54,9 @@ public class DemoJwtGeneratorRest {
     }
 
     /**
-     * Genera un JWT per un utente con ruolo GUEST
+     * Genera un JWT per un utente con ruolo guest
+     *
+     * return il token JWT generato
      */
     public static String generateGuestToken() {
         String[] roles = { EnumRoles.GUEST.getCode() };
@@ -62,23 +64,32 @@ public class DemoJwtGeneratorRest {
     }
 
     /**
-     * Genera un JWT per un utente con ruolo USER
+     * Genera un JWT per un utente con ruoli user e guest
+     *
+     * return il token JWT generato
      */
     public static String generateUserToken() {
-        String[] roles = { EnumRoles.USER.getCode() };
+        String[] roles = { EnumRoles.USER.getCode(), EnumRoles.GUEST.getCode() };
         return generateToken("USER1", roles);
     }
 
     /**
-     * Genera un JWT per un utente con ruoli USER e ADMIN
+     * Genera un JWT per un utente con ruoli admin, user e guest
+     *
+     * return il token JWT generato
      */
     public static String generateAdminToken() {
-        String[] roles = { EnumRoles.ADMIN.getCode(), EnumRoles.USER.getCode() };
+        String[] roles = { EnumRoles.ADMIN.getCode(), EnumRoles.USER.getCode(), EnumRoles.GUEST.getCode() };
         return generateToken("USER2", roles);
     }
 
     /**
      * Genera un JWT personalizzato
+     *
+     * @param username lo username da usare per il JWT (verrà inserito come upn e claim sub)
+     * @param roles l'elenco dei ruoli da associare all'utente
+     *
+     * return il token JWT generato
      */
     public static String generateToken(String username, String... roles) {
         return Jwt.issuer(ISSUER)
