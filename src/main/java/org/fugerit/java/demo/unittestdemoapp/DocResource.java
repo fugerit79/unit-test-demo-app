@@ -39,7 +39,6 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The HTML document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Tag(name = "html")
     @Operation(operationId = "HTMLExample", summary = "Example HTML generation", description = "Generates an example HTML document using Fugerit Venus Doc handler")
     @GET
     @Produces("text/html")
@@ -53,7 +52,6 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The Markdown document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Tag(name = "markdown")
     @Operation(operationId = "MarkdownExample", summary = "Example Markdown generation", description = "Generates an example Markdown document using Fugerit Venus Doc handler")
     @GET
     @Produces("text/markdown")
@@ -67,7 +65,6 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The AsciiDoc document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Tag(name = "asciidoc")
     @Operation(operationId = "AsciiDocExample", summary = "Example AsciiDoc generation", description = "Generates an example AsciiDoc document using Fugerit Venus Doc handler")
     @GET
     @Produces("text/asciidoc")
@@ -81,7 +78,6 @@ public class DocResource {
     @APIResponse(responseCode = "200", description = "The PDF document content")
     @APIResponse(responseCode = "500", description = "In case of an unexpected error")
     @Tag(name = "document")
-    @Tag(name = "pdf")
     @Operation(operationId = "PDFExample", summary = "Example PDF generation", description = "Generates an example PDF document using Fugerit Venus Doc handler")
     @GET
     @Produces("application/pdf")
@@ -91,6 +87,10 @@ public class DocResource {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_PDF)).build();
     }
 
+    /*
+     * metodo worker che genera effettivamente i documenti tramite il framework :
+     * https://github.com/fugerit-org/fj-doc ( documentazione : https://venusdocs.fugerit.org/ )
+     */
     byte[] processDocument(String handlerId) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
