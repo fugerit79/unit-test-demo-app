@@ -15,8 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import lombok.Getter;
-import lombok.AllArgsConstructor;
 
 /**
  * This is a basic example of Fugerit Venus Doc usage,
