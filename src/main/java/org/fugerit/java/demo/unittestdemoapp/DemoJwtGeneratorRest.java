@@ -1,7 +1,6 @@
 package org.fugerit.java.demo.unittestdemoapp;
 
 import io.smallrye.jwt.build.Jwt;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -46,18 +45,18 @@ public class DemoJwtGeneratorRest {
 
     @APIResponse(responseCode = "201", description = "Generazione del JWT")
     @Tag(name = "demo")
-    @Operation(operationId = "userToken", summary = "Genera un nuovo Token con permessi di ospite.", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
+    @Operation(operationId = "guestToken", summary = "Genera un nuovo Token con permessi di ospite.", description = "Attenzione : da utilizzare solo per motivi dimostrativi!")
     @GET
     @Produces("text/plain")
     @Path("/new-guest-jwt.txt")
     public Response newGuestToken() {
-        return Response.status(Response.Status.CREATED).entity(generateForbiddenToken()).build();
+        return Response.status(Response.Status.CREATED).entity(generateGuestToken()).build();
     }
 
     /**
-     * Genera un JWT per un utente con ruolo USER
+     * Genera un JWT per un utente con ruolo GUEST
      */
-    public static String generateForbiddenToken() {
+    public static String generateGuestToken() {
         String[] roles = { EnumRoles.GUEST.getCode() };
         return generateToken("USER3", roles);
     }

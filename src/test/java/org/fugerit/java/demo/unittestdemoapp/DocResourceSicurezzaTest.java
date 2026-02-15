@@ -74,7 +74,7 @@ class DocResourceSicurezzaTest {
     @Tag("Bearer")
     void testForbiddenWithJwt() {
         given()
-                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateForbiddenToken()))
+                .header("Authorization", "Bearer %s".formatted(DemoJwtGeneratorRest.generateGuestToken()))
                 .when().get("/doc/example.pdf").then().statusCode(Response.Status.FORBIDDEN.getStatusCode());
     }
 
