@@ -16,7 +16,7 @@
     <docHandlerConfig registerById="true">
 
         <!-- Type handler for markdown format -->
-        <docHandler id="md-ext" info="md" type="org.fugerit.java.doc.base.typehandler.markdown.SimpleMarkdownExtTypeHandler" />
+        <docHandler id="md-ext" info="md" type="org.fugerit.java.doc.base.typehandler.markdown.SimpleMarkdownExtTypeHandlerNoCommentsUTF8" />
         <!-- Type handler for xml format, generates the source xml:doc -->
         <docHandler id="xml-doc" info="xml" type="org.fugerit.java.doc.base.typehandler.core.DocTypeHandlerCoreXMLUTF8" />
         <!-- Type handler for html using freemarker -->
