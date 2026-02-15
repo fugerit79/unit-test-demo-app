@@ -23,7 +23,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Slf4j
 @ApplicationScoped
 @Path("/doc")
-@SecurityScheme(securitySchemeName = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT", description = "JWT Bearer Token Authentication")
+@SecurityScheme(securitySchemeName = "SecurityScheme", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT", description = "JWT Bearer Token Authentication")
 public class DocResource {
 
     DocHelper docHelper;
@@ -39,7 +39,7 @@ public class DocResource {
     @GET
     @Produces("text/html")
     @Path("/example.html")
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "SecurityScheme")
     @RolesAllowed({ "admin", "user" })
     public Response htmlExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_HTML)).build();
@@ -52,7 +52,7 @@ public class DocResource {
     @GET
     @Produces("text/markdown")
     @Path("/example.md")
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "SecurityScheme")
     @RolesAllowed({ "admin", "user", "guest" })
     public Response markdownExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_MD)).build();
@@ -65,7 +65,7 @@ public class DocResource {
     @GET
     @Produces("text/asciidoc")
     @Path("/example.adoc")
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "SecurityScheme")
     @RolesAllowed("admin")
     public Response asciidocExample() throws IOException {
         return Response.status(Response.Status.OK).entity(processDocument(DocConfig.TYPE_ADOC)).build();

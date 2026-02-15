@@ -1,6 +1,6 @@
 # unit-test-demo-app
 
-Questo progetto mostra come è possibile definire dei criteri minimi di compliance per un progetto attraverso delle JUnit opportunamente etichettate (tag).
+L'obiettivo di questo progetto è di mostrare come è possibile usare dei tag degli unit test per cercare di garantire la verifica di aspetti specifici di una applicazione.
 
 [![Keep a Changelog v1.1.0 badge](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.1.0-%23E05735)](CHANGELOG.md)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fugerit79_unit-test-demo-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fugerit79_unit-test-demo-app)
@@ -9,36 +9,86 @@ Questo progetto mostra come è possibile definire dei criteri minimi di complian
 [![code of conduct](https://img.shields.io/badge/conduct-Contributor%20Covenant-purple.svg)](https://github.com/fugerit-org/fj-universe/blob/main/CODE_OF_CONDUCT.md)
 [![CI workflow](https://github.com/fugerit79/unit-test-demo-app/actions/workflows/ci.yml/badge.svg)](https://github.com/fugerit79/unit-test-demo-app/actions/workflows/ci.yml)
 
+## Il progetto
+
+I principali componenti usati per questo progetto sono
+
+- [Quarkus - Uno stack cloud native e ottimizzato per OpenJDK HotSpot e GraalVM.](https://quarkus.io/)
+- [junit5-tag-check-maven-plugin - plugin maven che permette di verificare che dei test con tag specifici siano stati eseguiti.](https://github.com/fugerit-org/junit5-tag-check-maven-plugin)
+- [Fugerit Venus Doc - un Framewrk per la generazione di documenti in vari formati (usato solo per le funzionalità dimostrative).](https://github.com/fugerit-org/fj-doc)
+
+L'applicazione è configurata per gestire 3 ruoli e 4 path, che generano lo stesso documento in formati diversi. Non tutti i ruoli sono autorizzati a generare ogni path. Ecco la mappa dei permessi
+
+| path              | output   | ruoli              |
+|-------------------|----------|--------------------|
+| /doc/example.md   | MarkDown | admin, user, guest |
+| /doc/example.adoc | AsciiDoc | admin              |
+| /doc/example.html | HTML     | admin, user        |
+| /doc/example.pdf  | PDF      | admin              |
+
 ## Quickstart
 
-Requirement :
+Requisiti :
 
 * maven 3.9.x
 * java 21+
 
-1. Verify the app
+### 1. Verifica dell'applicazione
 
 ```shell
 mvn verify
 ```
 
-Per verificare la presenza degli unit test di sicurezza 
+Se si vuole attivare anche il plugin 'junit5-tag-check-maven-plugin'
 
 ```shell
 mvn verify -P security
 ```
 
-2. Start the app
+### 2. Avvio dell'applicazione
 
 ```shell
 mvn quarkus:dev
 ```
 
-3. Try the app
+### 3. Utilizzo dell'applicazione
 
-Open the [swagger-ui](http://localhost:8080/q/swagger-ui/)
+Aprire la Swagger UI di Quarkus [swagger-ui](http://localhost:8080/q/swagger-ui/)
 
-Test available paths (for instance : [/doc/example.md](http://localhost:8080/doc/example.md))
+### 4. Autorizzazione sullo swagger UI
+
+Con il path '/demo/{roles}.txt' è possibile generare un JWT con i ruoli.
+
+I ruoli vanno forniti separati da una virgola.
+
+NOTA: il path '/demo/{roles}.txt' è fornito solo come stub di autenticazione per la DEMO.
+Normalmente l'autorizzazione dovrebbe avvenire tramite un IDP esterno.
+
+![generazione del jwt dimostrativo](./src/docs/image/04-01-jwt-demo-generation.png)
+
+Cliccare sul tasto "Authorize" della Swagger UI e in serire il JWT ottenuto.
+
+![autorizzazione con il jwt dimostrativo](./src/docs/image/04-02-jwt-demo-authorize.png)
+
+### 5. Path non autorizzato 403
+
+Se si scegli un path per cui non si ha un ruolo autorizzato si otterrà un errore 403.
+
+Ad esempio se si vuole usae il path '/doc/example.adoc' senza il ruolo 'admin'.
+
+![ruolo non autorizzato per il formato](./src/docs/image/05-01-document-403.png)
+
+### 5. Path autorizzato 200
+
+Se si scegli un path per cui si ha un ruolo autorizzato si otterrà un errore 200.
+
+Ad esempio se si vuole usae il path '/doc/example.md' con i ruoli 'guest' e 'user'.
+
+![documento generato](./src/docs/image/05-02-document-200.png)
+
+
+Vedi la mappatura di ruoli e path all'inizio del README.
+
 
 ## Note sugli unit test
 
@@ -46,7 +96,6 @@ Le classi di test principali sono :
 
 - [DocResourceTest](src/test/java/test/org/fugerit/java/demo/unittestdemoapp/DocResourceTest.java), testa i casi positivi
 - [DocResourceSicurezzaTest](src/test/java/test/org/fugerit/java/demo/unittestdemoapp/DocResourceSicurezzaTest.java), test di sicurezza, in particolare gli accessi non autorizzati
-- [MockJwtHelperTest](src/test/java/test/org/fugerit/java/demo/unittestdemoapp/MockJwtHelperTest.java), test l'eccezione generica nel parsing del JWT tramite mockito e quarkus mock
 
 ## Security Junit con tagging
 
@@ -62,7 +111,7 @@ Definiamo i gruppi di test con cui vogliamo classificare i nostri test, ad esemp
 Ecco un esempio di test 'forbidden'
 
 ```java
-    @Test
+@Test
 @Tag("security")
 @Tag("forbidden")
 void testMarkdown403NoAdminRole() {
