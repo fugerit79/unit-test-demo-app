@@ -13,7 +13,7 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <compiler-plugin.version>3.14.1</compiler-plugin.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <surefire-plugin.version>3.5.4</surefire-plugin.version>
+    <surefire-plugin.version>3.5.5</surefire-plugin.version>
     <fugerit-code-rules-version>0.1.1</fugerit-code-rules-version>
     <freemarker-native-version>1.0.0</freemarker-native-version>
     <skipITs>true</skipITs>
